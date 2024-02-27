@@ -2,8 +2,8 @@ FROM alpine:3.18
 
 RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)"
 
-RUN apk update && apk add openrc && apk add nginx
+RUN apk update && apk add nginx
 
-COPY ./conf/nginx.conf /etc/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/http.d/nginx.conf
 
-CMD ["service", "nginx", "start"]
+CMD ["nginx", "-g", "daemon off;"]
