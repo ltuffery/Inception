@@ -1,3 +1,3 @@
-FROM alpine:3.18
+FROM debian:bookworm-backports
 
-RUN apk add mariadb
+RUN apt update && apt install mariadb-server -y
