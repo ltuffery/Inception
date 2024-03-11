@@ -8,3 +8,10 @@ services:
     ports:
       - "443:443"
         #    command: ["sleep", "infinity"]
+  mariadb:
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    command: ["sleep", "infinity"]
