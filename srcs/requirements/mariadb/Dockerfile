@@ -1,19 +1,12 @@
-FROM debian:bullseye
+FROM alpine:3.18
 
 EXPOSE 3306
 
-ARG DB_DB
-ARG DB_USER
-ARG DB_PASS
+COPY conf/50-server.cnf ~/.my.cnf
+COPY --chmod=777 tools/init.sh ./init.sh
 
-COPY conf/50-server.cnf /ect/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/initdb.sql /db.sql
+RUN apk update && apk add mariadb mariadb-client
+RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db
+RUN ./init.sh
 
-RUN apt-get update && apt-get upgrade -y && apt install mariadb-server -y
-RUN sed -i "s/DB_DB/$DB_DB/g" /db.sql
-RUN sed -i "s/DB_USER/$DB_USER/g" /db.sql
-RUN sed -i "s/DB_PASS/$DB_PASS/g" /db.sql
-RUN service mariadb start && mysql < /db.sql
-RUN rm -f /db.sql
-
-CMD ["mysqld"]
+CMD ["mysqld", "-u", "root"]

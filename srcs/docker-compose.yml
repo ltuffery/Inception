@@ -28,6 +28,7 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - inception
+    #command: ["sleep", "infinity"]
 
   wordpress:
     env_file: .env

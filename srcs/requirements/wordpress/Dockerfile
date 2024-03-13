@@ -12,7 +12,7 @@ COPY ./conf/www.conf /ect/php/7.4/fpm/pool.d/
 RUN mkdir -p /run/php
 
 # install wp (wordpress cli)
-RUN curl -O "https://github.com/wp-cli/wp-cli/releases/download/v2.10.0/wp-cli-2.10.0.phar"
+RUN wget "https://github.com/wp-cli/wp-cli/releases/download/v2.10.0/wp-cli-2.10.0.phar"
 RUN chmod +x wp-cli*
 RUN mv wp-cli* /usr/local/bin/wp
 
@@ -22,6 +22,4 @@ WORKDIR /var/www/wordpress
 COPY ./tools/init.sh ./init.sh
 RUN chmod +x init.sh
 
-RUN echo coucou
-
-CMD ["./init.sh"]
+CMD ["/var/www/wordpress/init.sh"]
