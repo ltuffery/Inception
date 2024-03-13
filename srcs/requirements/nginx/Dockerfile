@@ -1,9 +1,12 @@
-FROM alpine:3.18
+FROM debian:bullseye
 
-RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)"
+EXPOSE 443
 
-RUN apk update && apk add nginx
+RUN apt-get update && apt-get upgrade -y && apt-get install nginx openssl -y
 
-COPY ./conf/nginx.conf /etc/nginx/http.d/nginx.conf
+RUN mkdir -p /ect/ssl
+RUN openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=FRANCE/L=Angouleme/O=42/OU=42/CN=ltuffery" -newkey rsa:4096 -keyout /ect/ssl/ltuffery.key -out /ect/ssl/ltuffery.crt
+
+COPY ./conf/default /etc/nginx/sites-enabled/default
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -2,16 +2,56 @@ version: "3"
 
 services:
   nginx:
+    env_file: .env
     build:
       context: ./requirements/nginx/
-      dockerfile: Dockerfile
     ports:
       - "443:443"
-        #    command: ["sleep", "infinity"]
+    restart: on-failure
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+
   mariadb:
+    env_file: .env
     build:
       context: ./requirements/mariadb/
-      dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
-    command: ["sleep", "infinity"]
+      args:
+        DB_DB: ${DB_DB}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+    restart: on-failure
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+
+  wordpress:
+    env_file: .env
+    build:
+      context: ./requirements/wordpress/
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver_opts:
+      type: none
+      device: /home/nib/data/mariadb
+      o: bind
+  wordpress:
+    driver_opts:
+      type: none
+      device: /home/nib/data/wordpress
+      o: bind
