@@ -2,6 +2,7 @@ version: "3"
 
 services:
   nginx:
+    container_name: nginx
     env_file: .env
     build:
       context: ./requirements/nginx/
@@ -16,6 +17,7 @@ services:
       - wordpress
 
   mariadb:
+    container_name: mariadb
     env_file: .env
     build:
       context: ./requirements/mariadb/
@@ -30,6 +32,7 @@ services:
       - inception
 
   wordpress:
+    container_name: wordpress
     env_file: .env
     build:
       context: ./requirements/wordpress/
