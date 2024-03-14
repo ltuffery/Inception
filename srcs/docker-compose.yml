@@ -28,7 +28,6 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - inception
-    #command: ["sleep", "infinity"]
 
   wordpress:
     env_file: .env
@@ -49,10 +48,10 @@ volumes:
   mariadb:
     driver_opts:
       type: none
-      device: /home/nib/data/mariadb
+      device: /home/data/mariadb
       o: bind
   wordpress:
     driver_opts:
       type: none
-      device: /home/nib/data/wordpress
+      device: /home/data/wordpress
       o: bind

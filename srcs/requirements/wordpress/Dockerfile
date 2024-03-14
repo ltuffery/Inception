@@ -19,7 +19,6 @@ RUN mv wp-cli* /usr/local/bin/wp
 # create wordpress working dirctory
 RUN mkdir -p /var/www/wordpress
 WORKDIR /var/www/wordpress
-COPY ./tools/init.sh ./init.sh
-RUN chmod +x init.sh
+COPY --chmod=777 ./tools/init.sh ./init.sh
 
 CMD ["/var/www/wordpress/init.sh"]

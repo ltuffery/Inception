@@ -7,6 +7,5 @@ COPY --chmod=777 tools/init.sh ./init.sh
 
 RUN apk update && apk add mariadb mariadb-client
 RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql --skip-test-db
-RUN ./init.sh
 
-CMD ["mysqld", "-u", "root"]
+CMD ["sh", "./init.sh"]
