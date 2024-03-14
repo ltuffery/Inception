@@ -21,4 +21,4 @@ RUN mkdir -p /var/www/wordpress
 WORKDIR /var/www/wordpress
 COPY --chmod=777 ./tools/init.sh ./init.sh
 
-CMD ["/var/www/wordpress/init.sh"]
+CMD ["sh", "./init.sh"]
