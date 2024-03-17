@@ -1,7 +1,5 @@
 #!/bin/sh
 
-sleep 5
-
 if [ ! -f "wp-config.php" ]; then
     wp core download --allow-root
     wp config create --dbname="$DB_DB" --dbuser="$DB_USER" --dbpass="$DB_PASS" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
