@@ -9,7 +9,7 @@ services:
       context: ./requirements/nginx/
     ports:
       - "443:443"
-    restart: on-failure
+    restart: always
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -23,7 +23,7 @@ services:
     env_file: .env
     build:
       context: ./requirements/mariadb/
-    restart: on-failure
+    restart: always
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -33,6 +33,7 @@ services:
     container_name: wordpress
     image: wordpress
     env_file: .env
+    restart: always
     build:
       context: ./requirements/wordpress/
     volumes:
